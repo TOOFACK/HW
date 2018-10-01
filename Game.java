@@ -1,14 +1,14 @@
 package XO;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
     public static void main(String[] args) {
         Game game = new Game();
     }
-
     int[][] gameBoard = new int[3][3];
-    private String playerX = "X", playerY = "O", CurrentPlayer = playerX;
+    private String playerX = "X", playerY = "O", CurrentPlayer = playerX, previousPlayer=playerY;
     int str, col;
     Scanner in = new Scanner(System.in);
 
@@ -22,9 +22,18 @@ public class Game {
             str = in.nextInt();
             System.out.println("Выбери столбик: ");
             col = in.nextInt();
+            if(gameBoard[str][col]!=0){
+                System.out.println("Эта клетка занята, выберите другую");
+                setCurrentPlayer(getPreviousPlayer());
+                gameBoard[str][col] = getPreviousPlayer().equalsIgnoreCase(playerX) ? 2 : 1;
+                setPreviousPlayer(getPreviousPlayer().equals(playerX) ? playerX : playerY);
+            }
+            else{
+            setPreviousPlayer(getPreviousPlayer().equals(playerX) ? playerX : playerY);
             gameBoard[str][col] = getCurrentPlayer().equalsIgnoreCase(playerX) ? 1 : 2;
-            setCurrentPlayer(getCurrentPlayer().equals(playerX) ? playerY : playerX);
+            setCurrentPlayer(getCurrentPlayer().equals(playerX) ? playerY : playerX);}
             chekWin();
+            checkTie();
         }
 
     }
@@ -95,16 +104,49 @@ public class Game {
                     createGameBoard();
                 }
             }
-
         }
         if ((gameBoard[0][0] == 1) & (gameBoard[1][1] == 1) & (gameBoard[2][2] == 1)) {
             System.out.println("Победил игрок Х");
             createGameBoard();
         }
         if ((gameBoard[0][0] == 1) & (gameBoard[1][1] == 1) & (gameBoard[2][2] == 1)) {
+            System.out.println("Победил игрок Х");
+            createGameBoard();
+        }
+        if ((gameBoard[0][2] == 1) & (gameBoard[1][1] == 1) & (gameBoard[2][0] == 1)) {
+            System.out.println("Победил игрок Х");
+            createGameBoard();
+        }
+        if ((gameBoard[0][2] == 1) & (gameBoard[1][1] == 1) & (gameBoard[2][0] == 1)) {
             System.out.println("Победил игрок Х");
             createGameBoard();
         }
     }
+
+    private void checkTie() {
+        int temporaryval=0;
+       for (int str = 0; str < gameBoard.length; str++) {
+            for (int col = 0; col < gameBoard[str].length; col++) {
+                if (gameBoard[str][col] != 0) {
+                    temporaryval++;
+                }
+            }
+            if(temporaryval==9){
+                System.out.println("Ничья");
+                createGameBoard();
+            }
+        }
+    }
+
+    public String getPreviousPlayer() {
+        return previousPlayer;
+    }
+
+    public void setPreviousPlayer(String previousPlayer) {
+        this.previousPlayer = previousPlayer;
+    }
 }
+
+
+
 
