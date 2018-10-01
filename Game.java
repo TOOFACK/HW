@@ -22,6 +22,10 @@ public class Game {
             str = in.nextInt();
             System.out.println("Выбери столбик: ");
             col = in.nextInt();
+            if((col>2)||(str>2)||(col<0)||(str<0)){
+                System.out.println("Вводимые значения больше поля или меньше");
+                continue;
+            }
             if(gameBoard[str][col]!=0){
                 System.out.println("Эта клетка занята, выберите другую");
                 setCurrentPlayer(getPreviousPlayer());
