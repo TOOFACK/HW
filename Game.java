@@ -26,31 +26,12 @@ public class Game {
                 System.out.println("Вводимые значения больше поля или меньше");
                 continue;
             }
-            checkRewriting();
+            if(gameBoard[str][col]!=0){
+                continue;
+            }
             gameBoard[str][col] = getCurrentPlayer().equalsIgnoreCase(playerX) ? 1 : 2;
             setCurrentPlayer(getCurrentPlayer().equals(playerX) ? playerY : playerX);
-            if(x!=0){
-                System.out.println("Свое не трожь");
-                setCurrentPlayer(playerX);
-                x=0;
-            }
-            if(y!=0){
-                System.out.println("Свое не трожь");
-                setCurrentPlayer(playerY);
-                y=0;
-            }
-            if(x1!=0){
-                System.out.println("Выберите другую клетку");
-                setCurrentPlayer(playerX);
-                gameBoard[str][col]=2;
-                x1=0;
-            }
-            if(y1!=0){
-                System.out.println("Выберите другую клетку");
-                setCurrentPlayer(playerY);
-                gameBoard[str][col]=1;
-                y1=0;
-            }
+
             chekWin();
             checkTie();
 
@@ -157,32 +138,10 @@ public class Game {
         }
     }
 
-    private void checkRewriting() {
-
-        if((gameBoard[str][col]==1)&&(getCurrentPlayer()==playerX)){
-            gameBoard[str][col]=1;
-            setCurrentPlayer(playerX);
-            x++;
-        }
-        if ((gameBoard[str][col] == 2) && (getCurrentPlayer() == playerY)) {
-            setCurrentPlayer(playerY);
-            gameBoard[str][col] = 2;
-            y++;
-        }
-        //new
-        if((gameBoard[str][col]==1)&&(getCurrentPlayer()==playerY)){
-            gameBoard[str][col]=1;
-            setCurrentPlayer(playerY);
-            y1++;
-        }
-        if((gameBoard[str][col]==2)&&(getCurrentPlayer()==playerX)){
-            gameBoard[str][col]=2;
-            setCurrentPlayer(playerX);
-            x1++;
-        }
 
 
-    }
+
+    
 
 }
 
