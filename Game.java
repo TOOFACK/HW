@@ -9,7 +9,7 @@ public class Game {
     }
     int[][] gameBoard = new int[3][3];
     private String playerX = "X", playerY = "O", CurrentPlayer = playerX, previousPlayer=playerY;
-    int str, col;
+    int str, col,x=0,y=0,x1=0,y1=0;
     Scanner in = new Scanner(System.in);
 
     Game() {
@@ -22,29 +22,43 @@ public class Game {
             str = in.nextInt();
             System.out.println("Выбери столбик: ");
             col = in.nextInt();
-            if((col>2)||(str>2)||(col<0)||(str<0)){
+            if ((col > 2) || (str > 2) || (col < 0) || (str < 0)) {
                 System.out.println("Вводимые значения больше поля или меньше");
                 continue;
             }
-            if(gameBoard[str][col]!=0){
-                System.out.println("Эта клетка занята, выберите другую");
-                setCurrentPlayer(getPreviousPlayer());
-                gameBoard[str][col] = getPreviousPlayer().equalsIgnoreCase(playerX) ? 2 : 1;
-                setPreviousPlayer(getPreviousPlayer().equals(playerX) ? playerX : playerY);
-                System.out.println(getPreviousPlayer());
-            }
-            else{ //Добавь сеттер для превиусплейр, чтобы тоже менялся
+            checkRewriting();
             gameBoard[str][col] = getCurrentPlayer().equalsIgnoreCase(playerX) ? 1 : 2;
             setCurrentPlayer(getCurrentPlayer().equals(playerX) ? playerY : playerX);
-                setPreviousPlayer((getCurrentPlayer().equals(playerX) ? playerX : playerY));
-
+            if(x!=0){
+                System.out.println("Свое не трожь");
+                setCurrentPlayer(playerX);
+                x=0;
             }
-            System.out.println(getPreviousPlayer());
+            if(y!=0){
+                System.out.println("Свое не трожь");
+                setCurrentPlayer(playerY);
+                y=0;
+            }
+            if(x1!=0){
+                System.out.println("Выберите другую клетку");
+                setCurrentPlayer(playerX);
+                gameBoard[str][col]=2;
+                x1=0;
+            }
+            if(y1!=0){
+                System.out.println("Выберите другую клетку");
+                setCurrentPlayer(playerY);
+                gameBoard[str][col]=1;
+                y1=0;
+            }
+           // setPreviousPlayer((getCurrentPlayer().equals(playerX) ? playerY : playerX));
             chekWin();
             checkTie();
-        }
 
+        }
     }
+
+
 
     private void createGameBoard() {
         for (int str = 0; str < gameBoard.length; str++) {
@@ -117,16 +131,16 @@ public class Game {
             System.out.println("Победил игрок Х");
             createGameBoard();
         }
-        if ((gameBoard[0][0] == 1) & (gameBoard[1][1] == 1) & (gameBoard[2][2] == 1)) {
-            System.out.println("Победил игрок Х");
+        if ((gameBoard[0][0] == 2) & (gameBoard[1][1] == 2) & (gameBoard[2][2] == 2)) {
+            System.out.println("Победил игрок Y");
             createGameBoard();
         }
         if ((gameBoard[0][2] == 1) & (gameBoard[1][1] == 1) & (gameBoard[2][0] == 1)) {
             System.out.println("Победил игрок Х");
             createGameBoard();
         }
-        if ((gameBoard[0][2] == 1) & (gameBoard[1][1] == 1) & (gameBoard[2][0] == 1)) {
-            System.out.println("Победил игрок Х");
+        if ((gameBoard[0][2] == 2) & (gameBoard[1][1] == 2) & (gameBoard[2][0] == 2)) {
+            System.out.println("Победил игрок Y");
             createGameBoard();
         }
     }
@@ -145,6 +159,34 @@ public class Game {
             }
         }
     }
+    private void checkRewriting() {
+
+        if((gameBoard[str][col]==1)&&(getCurrentPlayer()==playerX)){
+            gameBoard[str][col]=1;
+            setCurrentPlayer(playerX);
+            x++;
+        }
+        if ((gameBoard[str][col] == 2) && (getCurrentPlayer() == playerY)) {
+            setCurrentPlayer(playerY);
+            gameBoard[str][col] = 2;
+            y++;
+        }
+        //new
+        if((gameBoard[str][col]==1)&&(getCurrentPlayer()==playerY)){
+            gameBoard[str][col]=1;
+            setCurrentPlayer(playerY);
+            y1++;
+        }
+        if((gameBoard[str][col]==2)&&(getCurrentPlayer()==playerX)){
+            gameBoard[str][col]=2;
+            setCurrentPlayer(playerX);
+            x1++;
+        }
+
+
+    }
+
+
 
     public String getPreviousPlayer() {
         return previousPlayer;
