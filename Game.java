@@ -1,6 +1,6 @@
 package XO;
 
-import java.util.Random;
+
 import java.util.Scanner;
 
 public class Game {
@@ -51,14 +51,11 @@ public class Game {
                 gameBoard[str][col]=1;
                 y1=0;
             }
-           // setPreviousPlayer((getCurrentPlayer().equals(playerX) ? playerY : playerX));
             chekWin();
             checkTie();
 
         }
     }
-
-
 
     private void createGameBoard() {
         for (int str = 0; str < gameBoard.length; str++) {
@@ -159,6 +156,7 @@ public class Game {
             }
         }
     }
+
     private void checkRewriting() {
 
         if((gameBoard[str][col]==1)&&(getCurrentPlayer()==playerX)){
@@ -186,15 +184,6 @@ public class Game {
 
     }
 
-
-
-    public String getPreviousPlayer() {
-        return previousPlayer;
-    }
-
-    public void setPreviousPlayer(String previousPlayer) {
-        this.previousPlayer = previousPlayer;
-    }
 }
 
 
