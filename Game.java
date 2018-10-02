@@ -31,11 +31,15 @@ public class Game {
                 setCurrentPlayer(getPreviousPlayer());
                 gameBoard[str][col] = getPreviousPlayer().equalsIgnoreCase(playerX) ? 2 : 1;
                 setPreviousPlayer(getPreviousPlayer().equals(playerX) ? playerX : playerY);
+                System.out.println(getPreviousPlayer());
             }
-            else{
-            setPreviousPlayer(getPreviousPlayer().equals(playerX) ? playerX : playerY);
+            else{ //Добавь сеттер для превиусплейр, чтобы тоже менялся
             gameBoard[str][col] = getCurrentPlayer().equalsIgnoreCase(playerX) ? 1 : 2;
-            setCurrentPlayer(getCurrentPlayer().equals(playerX) ? playerY : playerX);}
+            setCurrentPlayer(getCurrentPlayer().equals(playerX) ? playerY : playerX);
+                setPreviousPlayer((getCurrentPlayer().equals(playerX) ? playerX : playerY));
+
+            }
+            System.out.println(getPreviousPlayer());
             chekWin();
             checkTie();
         }
